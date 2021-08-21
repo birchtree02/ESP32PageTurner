@@ -2,8 +2,6 @@
 #include <BleKeyboard.h>
 #include <HardwareSerial.h>
 
-#include <chrono>
-
 #define NUM_BUTTONS 3
 #define KB_NAME "PageTurner"
 #define LONG_PRESS_TIME 500 // ms
