@@ -32,6 +32,23 @@ void loop() {
         if (digitalRead(button_pins[i]) == LOW && button_states[i] == 0) {
           button_states[i] = 1;
           Serial.print(i);
+
+          if (i==0) {
+            bleKeyboard.press(KEY_LEFT_CTRL);
+            bleKeyboard.press(KEY_TAB);
+          } else if (i==1) {
+            for (int x=0; x<6; x++) {
+              bleKeyboard.press(KEY_UP_ARROW);
+              delay(100);
+            }
+          } else if (i==2) {
+            for (int x=0; x<6; x++) {
+              bleKeyboard.press(KEY_DOWN_ARROW);
+              delay(100);
+            }
+          }
+          bleKeyboard.releaseAll();
+
         } else {
           if (button_states[i] == 1 && digitalRead(button_pins[i]) == HIGH) {
             button_states[i] = 0;
