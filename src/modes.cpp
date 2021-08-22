@@ -1,9 +1,7 @@
-export module modes;
-
 class Mode {
   
-}
+};
 
-export Mode onsong;
-export Mode browseriPad;
-export Mode browser;
+Mode browser;
+Mode browseriPad;
+Mode onsong;
