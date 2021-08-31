@@ -27,13 +27,18 @@ void setup() {
 void loop() {
   if(bleKeyboard.isConnected()) {
     for (int i=0; i<NUM_BUTTONS; i++) {
-      if(millis() - last_pressed[i] > 100) {
-        last_pressed[i] = millis();
+      if(millis() - last_pressed[i] > DEBOUNCE_TIME) {
         if (digitalRead(button_pins[i]) == LOW && button_states[i] == 0) {
+          last_pressed[i] = millis();
           button_states[i] = 1;
+
+        } else if (button_states[i] == 1 && digitalRead(button_pins[i]) == HIGH) {
           Serial.print(i);
 
           if (i==0) {
+            if (millis() - last_pressed[i] > LONG_PRESS_TIME) {
+              bleKeyboard.press(KEY_SHIFT);
+            }
             bleKeyboard.press(KEY_LEFT_CTRL);
             bleKeyboard.press(KEY_TAB);
           } else if (i==1) {
@@ -48,11 +53,10 @@ void loop() {
             }
           }
           bleKeyboard.releaseAll();
-
-        } else {
-          if (button_states[i] == 1 && digitalRead(button_pins[i]) == HIGH) {
-            button_states[i] = 0;
-          }
+          
+          
+          button_states[i] = 0;
+          
         }
       }
       
