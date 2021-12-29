@@ -18,6 +18,8 @@ String btn2b = "##btpt4##";
 String btn3a = "##btpt5##";
 String btn3b = "##btpt6##";
 
+String keystrings[6] = {btn1a, btn1b, btn2a, btn2b, btn3a, btn3b};
+
 String output;
 
 int button_debounce[3][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -68,24 +70,10 @@ void loop() {
 
       if (button_states[i] == 1 && !arrayCont0(button_debounce[i], 10)) {
         Serial.print(i);
-        if (i==0) {
-          if (millis() - last_pressed[i] > LONG_PRESS_TIME) {
-            output = btn1a;
-          } else {
-            output = btn1b;
-          }
-        } else if (i==1) {
-          if (millis() - last_pressed[i] > LONG_PRESS_TIME) {
-            output = btn2a;
-          } else {
-            output = btn2b;
-          }
-        } else if (i==2) {
-          if (millis() - last_pressed[i] > LONG_PRESS_TIME) {
-            output = btn3a;
-          } else {
-            output = btn3b;
-          }
+        if (millis() - last_pressed[i] > LONG_PRESS_TIME) {
+          output = keystrings[i*2];
+        } else {
+          output = keystrings[i*2+1];
         }
         
         bleKeyboard.print(output);  
