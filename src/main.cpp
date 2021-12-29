@@ -11,12 +11,12 @@ int button_pins[3] = {18, 25, 34};
 int button_states[3] = {0, 0, 0};
 int last_pressed[3] = {0, 0, 0};
 
-String btn1a = "1";
-String btn1b = "2";
-String btn2a = "3";
-String btn2b = "4";
-String btn3a = "5";
-String btn3b = "6";
+String btn1a = "##btpt1##";
+String btn1b = "##btpt2##";
+String btn2a = "##btpt3##";
+String btn2b = "##btpt4##";
+String btn3a = "##btpt5##";
+String btn3b = "##btpt6##";
 
 String output;
 
