@@ -51,7 +51,7 @@ void setup() {
 
 void loop() {
   debounce_index += 1;
-  debounce_index = debounce_index%10;
+  debounce_index %= 10;
   if(bleKeyboard.isConnected()) {
     Serial.println("");
     for (int i=0; i<NUM_BUTTONS; i++) {
