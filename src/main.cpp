@@ -11,6 +11,15 @@ int button_pins[3] = {18, 25, 34};
 int button_states[3] = {0, 0, 0};
 int last_pressed[3] = {0, 0, 0};
 
+String btn1a = "1";
+String btn1b = "2";
+String btn2a = "3";
+String btn2b = "4";
+String btn3a = "5";
+String btn3b = "6";
+
+String output;
+
 int button_debounce[3][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                               {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                               {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
@@ -46,7 +55,7 @@ void loop() {
     for (int i=0; i<NUM_BUTTONS; i++) {
       Serial.print(digitalRead(button_pins[i]));
 
-      if (digitalRead(button_pins[i]) == LOW && button_states[i] == 0) {
+      if (digitalRead(button_pins[i]) == LOW) {
         button_debounce[i][debounce_index] = 0;
         if (button_states[i] == 0) {
           last_pressed[i] = millis();
@@ -57,31 +66,29 @@ void loop() {
         button_debounce[i][debounce_index] = 1;
       }
 
-      if (!arrayCont0) {
+      if (button_states[i] == 1 && !arrayCont0(button_debounce[i], 10)) {
         Serial.print(i);
-
         if (i==0) {
           if (millis() - last_pressed[i] > LONG_PRESS_TIME) {
-            bleKeyboard.press(KEY_LEFT_SHIFT);
+            output = btn1a;
+          } else {
+            output = btn1b;
           }
-          bleKeyboard.press(KEY_LEFT_CTRL);
-          bleKeyboard.press(KEY_TAB);
         } else if (i==1) {
-          for (int x=0; x<6; x++) {
-            bleKeyboard.press(KEY_UP_ARROW);
-            bleKeyboard.releaseAll();
-            // delay(100);
+          if (millis() - last_pressed[i] > LONG_PRESS_TIME) {
+            output = btn2a;
+          } else {
+            output = btn2b;
           }
         } else if (i==2) {
-          for (int x=0; x<6; x++) {
-            bleKeyboard.press(KEY_DOWN_ARROW);
-            bleKeyboard.releaseAll();
-            // delay(100);
+          if (millis() - last_pressed[i] > LONG_PRESS_TIME) {
+            output = btn3a;
+          } else {
+            output = btn3b;
           }
         }
-        bleKeyboard.releaseAll();
         
-        
+        bleKeyboard.print(output);  
         button_states[i] = 0;
         
       }
