@@ -76,7 +76,7 @@ void loop() {
           output = keystrings[i*2+1];
         }
         
-        bleKeyboard.print(output);  
+        bleKeyboard.print(output);
         button_states[i] = 0;
         
       }
